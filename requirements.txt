@@ -5,5 +5,4 @@ flask_restful
 flask_wtf
 wtforms
 wtforms.validators
-wtforms.fields.html5
 datetime
