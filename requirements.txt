@@ -4,8 +4,6 @@ flask_login
 flask_restful
 flask_wtf
 wtforms
-werkzeug.security
 wtforms.validators
 wtforms.fields.html5
-gunicorn
 datetime
