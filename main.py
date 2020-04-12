@@ -233,7 +233,7 @@ def main():
             abort(404)
         return redirect(f'/{0}/{0}')
 
-    app.run('127.0.0.1', 8000, True)
+    app.run()
 
 
 if __name__ == '__main__':
