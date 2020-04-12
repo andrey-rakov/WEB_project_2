@@ -28,7 +28,8 @@ A web resource where you can save links to interesting sites and group them by t
 Проект получился вполне рабочим. В дальнейшем планирую развивать этот проект. Идей для развития проекта много.
 
 Доступ при локальном запуске: http://127.0.0.1:5000/0/0
-Пользователи: admin почта: admin@mail.ru, пароль: 12345
-              user_1 почта: user_1@mail.ru, пароль: 12345
+
+Пользователи № 1: admin почта: admin@mail.ru, пароль: 12345, пользователь № 2: user_1 почта: user_1@mail.ru, пароль: 12345
+
 Ссылка на сайт в интернете: https://best-sites-selected-manually.herokuapp.com/ (на момент сдачи не работает, буду исправлять)
 
