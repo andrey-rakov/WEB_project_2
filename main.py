@@ -76,6 +76,7 @@ def main():
     
     @app.route("/")
     @app.route("/index/")
+    @app.route("/start/")
     def start():
         id_topic, id_all = 0, 0
         id_list_users = [1]
