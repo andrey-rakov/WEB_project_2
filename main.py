@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_restful import abort
-
+import os
 from data import db_session
 from data.add_site import AddSiteForm
 from data.topic_form import AddTopicForm
@@ -73,47 +73,10 @@ def main():
         return render_template("index.html", dict_site=dict_site, name_topics=name_topics,
                                title='Лучшие сайты, отобранные вручную!', id_topic=id_topic,
                                id_all=id_all, count_sites=count_sites)
-    
-    @app.route("/")
-    @app.route("/index/")
-    @app.route("/start/")
-    def start():
-        id_topic, id_all = 0, 0
-        id_list_users = [1]
-        if current_user.is_authenticated:
-            if current_user.id != 1:
-                if id_all:
-                    id_list_users = [current_user.id]
-                else:
-                    id_list_users.append(current_user.id)
-        session = db_session.create_session()
-        sites = session.query(Site).filter(Site.id_user.in_(id_list_users))
-        if id_all:
-            id_list_users = [1, current_user.id]
-        topics = session.query(Topic).filter(Topic.user_id.in_(id_list_users))
-        list_topics = sorted([p for p in topics], key=lambda q: q.topic_title)
-        name_topics = {}
-        name_topics[0] = 'Все темы сайтов'
-        for topic in list_topics:
-            if topic.id not in name_topics:
-                name_topics[topic.id] = topic.topic_title
-            elif topic.id == current_user.id:
-                name_topics[topic.id] = topic.topic_title
-        dict_site = {}
-        list_sites = sorted([p for p in sites], key=lambda q: name_topics[q.id_topic])
-        count_sites = {}
-        count_sites[0] = len(list_sites)
-        for p in list_sites:
-            dict_site[p.id_topic] = dict_site.get(p.id_topic, []) + [p]
-        for p in dict_site:
-            count_sites[p] = len(dict_site[p])
-        count_sites[-1] = len(dict_site)
-        return render_template("index.html", dict_site=dict_site, name_topics=name_topics,
-                               title='Лучшие сайты, отобранные вручную!', id_topic=id_topic,
-                               id_all=id_all, count_sites=count_sites)
 
     @app.route("/")
     @app.route("/index/")
+    @app.route("/start/")
     def start():
         id_topic, id_all = 0, 0
         id_list_users = [1]
