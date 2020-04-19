@@ -73,6 +73,44 @@ def main():
         return render_template("index.html", dict_site=dict_site, name_topics=name_topics,
                                title='Лучшие сайты, отобранные вручную!', id_topic=id_topic,
                                id_all=id_all, count_sites=count_sites)
+    
+    @app.route("/")
+    @app.route("/index/")
+    @app.route("/start/")
+    def start():
+        id_topic, id_all = 0, 0
+        id_list_users = [1]
+        if current_user.is_authenticated:
+            if current_user.id != 1:
+                if id_all:
+                    id_list_users = [current_user.id]
+                else:
+                    id_list_users.append(current_user.id)
+        session = db_session.create_session()
+        sites = session.query(Site).filter(Site.id_user.in_(id_list_users))
+        if id_all:
+            id_list_users = [1, current_user.id]
+        topics = session.query(Topic).filter(Topic.user_id.in_(id_list_users))
+        list_topics = sorted([p for p in topics], key=lambda q: q.topic_title)
+        name_topics = {}
+        name_topics[0] = 'Все темы сайтов'
+        for topic in list_topics:
+            if topic.id not in name_topics:
+                name_topics[topic.id] = topic.topic_title
+            elif topic.id == current_user.id:
+                name_topics[topic.id] = topic.topic_title
+        dict_site = {}
+        list_sites = sorted([p for p in sites], key=lambda q: name_topics[q.id_topic])
+        count_sites = {}
+        count_sites[0] = len(list_sites)
+        for p in list_sites:
+            dict_site[p.id_topic] = dict_site.get(p.id_topic, []) + [p]
+        for p in dict_site:
+            count_sites[p] = len(dict_site[p])
+        count_sites[-1] = len(dict_site)
+        return render_template("index.html", dict_site=dict_site, name_topics=name_topics,
+                               title='Лучшие сайты, отобранные вручную!', id_topic=id_topic,
+                               id_all=id_all, count_sites=count_sites)
 
     @app.route("/")
     @app.route("/index/")
@@ -270,7 +308,8 @@ def main():
             abort(404)
         return redirect(f'/{0}/{0}')
 
-    app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 if __name__ == '__main__':
