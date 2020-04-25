@@ -18,7 +18,7 @@ login_manager.init_app(app)
 
 
 def main():
-    db_session.global_init("db/best_links.sqlite")
+    db_session.global_init("best_links.sqlite")
 
     @login_manager.user_loader
     def load_user(user_id):
