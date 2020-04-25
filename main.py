@@ -269,8 +269,8 @@ def main():
         else:
             abort(404)
         return redirect(f'/{0}/{0}')
+    app.run('127.0.0.1', 8000, True)
 
 
 if __name__ == '__main__':
-    app.run('127.0.0.1', 8000, True)
     main()
