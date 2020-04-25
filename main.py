@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_restful import abort
-
 from data import db_session
 from data.add_site import AddSiteForm
 from data.topic_form import AddTopicForm
@@ -308,8 +307,7 @@ def main():
             abort(404)
         return redirect(f'/{0}/{0}')
 
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run('127.0.0.1', 8000, True)
 
 
 if __name__ == '__main__':
