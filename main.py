@@ -1,14 +1,14 @@
 from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_user, login_required, logout_user, current_user
 from flask_restful import abort
-from data import db_session
-from data.add_site import AddSiteForm
-from data.topic_form import AddTopicForm
-from data.login_form import LoginForm
-from data.users import User
-from data.sites import Site
-from data.topics import Topic
-from data.register import RegisterForm
+from models import db_session
+from models.add_site import AddSiteForm
+from models.topic_form import AddTopicForm
+from models.login_form import LoginForm
+from models.users import User
+from models.sites import Site
+from models.topics import Topic
+from models.register import RegisterForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'U74anllYYrxWwqcwImKh8LaGFdb8uM'
