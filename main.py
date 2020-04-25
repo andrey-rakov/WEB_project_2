@@ -12,13 +12,14 @@ from models.register import RegisterForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'U74anllYYrxWwqcwImKh8LaGFdb8uM'
-db_session.global_init("best_links.sqlite")
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 
 
 def main():
+    db_session.global_init("best_links.sqlite")
+
     @login_manager.user_loader
     def load_user(user_id):
         session = db_session.create_session()
@@ -277,7 +278,8 @@ def main():
             abort(404)
         return redirect(f'/{0}/{0}')
 
+    app.run('127.0.0.1', 8000, True)
+
 
 if __name__ == '__main__':
-    app.run('127.0.0.1', 8000, True)
     main()
